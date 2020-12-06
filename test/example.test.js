@@ -1,12 +1,28 @@
-const assert = require('assert');
+//During the test the env variable is set to test
+// process.env.NODE_ENV = 'test';
 
-describe('Simple Math Test', () => {
+let Book = require('../app/models/book');
 
-   it('should return 2', () => {
-      assert.strictEqual(1 + 1, 2);
-   });
+//Require the dev-dependencies
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let server = require('../app.js');
+// let should = chai.should();
 
-   it('should return 9', () => {
-      assert.strictEqual(3 * 3, 9);
+
+chai.use(chaiHttp);
+
+describe('Hello', () => {
+   describe('/GET hello', () => {
+      it('it should return Hello World!', (done) => {
+         chai.request(server)
+            .get('/hello')
+            .end((err, res) => {
+               res.should.have.status(200);
+               // res.body.should.be.a('array');
+               // res.body.length.should.be.eql(0);
+               done();
+            });
+      });
    });
 });
